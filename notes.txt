@@ -62,7 +62,7 @@ when you run 'npm start' you see the 'Welcome page on the browser, to change the
 inside the init() below the 'fallbackLng:' add the 'detection' object and inside here pass 
  "order: ['querystring', 'cookie', 'localStorage', 'sessionStorage', 'navigator', 'htmlTag', 'path', 'subdomain']"  - where the order which tells the utility which setting to prioritize, you could have multiple or you could prioritize the 'COOKIE' beacuse that's is the user setting, and if you can't find the language inside the cookie you actually revert to whatever comes next. // like: 
   detection: {
-      order: ["htmlTag", "cookie", "localStorage", "path", "subdomain"], //we change the order for this project, added only those what we will use here.
+      order: ["cookie", "htmlTag", "localStorage", "path", "subdomain"], //we change the order for this project, added only those what we will use here.
     }
 9. remove the 
     lng: document.querySelector("html").lang, from the init() we don't use it any more, since using a Langauge Detector utility 
@@ -76,3 +76,49 @@ inside the init() below the 'fallbackLng:' add the 'detection' object and inside
       caches: ["cookie"],
     },
 Now, if you go the devtools -> Application -> Local Storage (http:localhost:300) you'll see Key/Value and then go to the 'Cookies'(http:localhost:300) you'll find the Name/Value properties, and when you change the '<html lang="ru">' that cookie changes to whatever you defined as value.
+
+
+---------------i18next http backend package----------
+The utility i18next http backend allows us to load different languages files from any source that we wanted to load it from. 
+https://github.com/i18next/i18next-http-backend - instruction
+
+11. npm install i18next-http-backend  // install command
+12. outsource the translation data into files and then load them once the app is loaded.
+13. exctact translation object into its own
+create inside the 'public' folder assets/locales/en/translation.json file, and put the value of the 'translation' object
+      en: {
+        translation: {
+          "Welcome to React": "Welcome to React", // this object cut out from here and put inside the translation.json file, and change it for json format.
+        },
+      },
+translation.json file should look like this.
+{
+  "welcome_to_react": "Welcome to React"
+}
+14. We can copy this and add another file inside the locales folder and call it 'ru' fro the russion translation  and pass as its value the russian text, as 
+{
+  "welcome_to_react": "Добро пожаловать в React"
+}
+15. same action for any language option in your project then, remove the  resources key and its value from the init() inside the index.js file
+
+16. import HttpApi from 'i18next-http-backend'; // import it into index.js 
+17. Add another chain like :
+  .use(initReactI18next)
+  .use(LanguageDetector)
+  .use(HttpApi)
+
+18. Configure it inside the init() add  'backend' property(or key) as its value pass an object 'loadPath, which tells where to find the translation files, in this project we passing the relative path because we're serving the files from within the same project. And you can also load these from your backend api or from anywhere.
+after the detection object pass this  --> 
+    backend: {
+      loadPath: "/assets/locales/{{lng}}/translation.json",
+    },
+ 19. after the backend object add 
+     react: {
+      useSuspense: false,
+    }, 
+
+20. indie the App funtion inside the index.js change the key inside the return, since we changed it inside the json file, where all data comes from., like -> 
+return <h2>{t("welcome_to_react")}</h2>;    
+
+Now can check if the app works same as before, and you can manually change the 'cookie' value by changing the 'Value' property for the lang changes. It works this way too because it's fetching the cookie  first before the htmlTag, and it's actually ignoring the htmlTag because this is more priority. 
+Now if you look at 'Network' tab of the devtool, you see that it's loading the translation.json 
