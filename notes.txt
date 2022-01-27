@@ -122,3 +122,18 @@ return <h2>{t("welcome_to_react")}</h2>;
 
 Now can check if the app works same as before, and you can manually change the 'cookie' value by changing the 'Value' property for the lang changes. It works this way too because it's fetching the cookie  first before the htmlTag, and it's actually ignoring the htmlTag because this is more priority. 
 Now if you look at 'Network' tab of the devtool, you see that it's loading the translation.json 
+
+____________Change the language through the UI________________
+1. npm install bootstrap 
+2. npm i @popperjs/core
+3.import to index.js file, at the top.
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.js";
+4. add key supportedLngs inside init()
+supportedLngs: ['en', 'ru', 'kz'],
+5. remove App function, instead import App component  from App.js, like 
+import App from "./App";
+6. make changes to the App.js, to use translations from the or json files, import 
+import { useTranslation} from "react-i18next"; to App. and remove it from the index.js , since we don't use it there.
+then, before the return create a const like:
+const { t } = useTranslation(); call it as a hook, and destructue t.

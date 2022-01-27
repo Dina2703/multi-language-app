@@ -1,3 +1,6 @@
 {
-  "welcome_to_react": "Қош келдіңіз React-қа"
+  "app_title": "Тақырып",
+  "language": "Тіл",
+  "welcome_message": "Қош келдіңіз",
+  "days_since_release": "Бұл бейненін шыққанына {{number_of_days}} күн болды"
 }
