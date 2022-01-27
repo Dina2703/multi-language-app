@@ -1,0 +1,78 @@
+-----------React Multi-Language App -with !18next--------------------
+https://www.i18next.com/overview/getting-started  - instuction how to use !18next
+1. npx create-react-app projectName;
+2. npx create-react-app projectName --template clean-cra //creates the simple react-app without extra files that we don't use for templates.
+3. npm install i18next --save or  npm install react-i18next i18next --save //'react-i18next'- it' a react implementation of i18next for production.
+4. inside the index.js add below codes.
+-------start--------
+ import React from "react";
+import ReactDOM from "react-dom";
+import i18n from "i18next";
+import { useTranslation, initReactI18next } from "react-i18next";
+import "./index.css";
+// import App from "./App";
+
+i18n
+  .use(initReactI18next) // passes i18n down to react-i18next
+  .init({
+    // the translations
+    // (tip move them in a JSON file and import them,
+    // or even better, manage them via a UI: https://react.i18next.com/guides/multiple-translation-files#manage-your-translations-with-a-management-gui)
+    resources: {
+      en: {
+        translation: {
+          "Welcome to React": "Welcome to React",
+        },
+      },
+      ru: {
+        translation: {
+          "Welcome to React": "Добро пожаловать в React",
+        },
+      },
+      kz: {
+        translation: {
+          "Welcome to React": "Қош келдіңіз React-қа",
+        },
+      },
+    },
+    lng: document.querySelector("html").lang, // if you're using a language detector, do not define the 'lng' option
+    fallbackLng: "en",
+  });
+
+function App() {
+  const { t } = useTranslation();
+
+  return <h2>{t("Welcome to React")}</h2>;
+}
+
+// append app to dom
+ReactDOM.render(<App />, document.getElementById("root"));
+-------end--------
+
+when you run 'npm start' you see the 'Welcome page on the browser, to change the language,you can test changing the language  manually,  change the value for the lang attribute '<html lang="ru">' in the index.html page. Which works thanks to this line of code " lng: document.querySelector("html").lang ", but when you use a language detector utility don't define the 'lng' attribute(or property).
+
+4. https://github.com/i18next/i18next-browser-languageDetector // to get instruction for the language detector
+5. npm install i18next-browser-languagedetector   - install the package
+6. import LanguageDetector from 'i18next-browser-languagedetector';  // put at the top the index.js.
+7..use(initReactI18next) // passes i18n down to react-i18next
+  .use(LanguageDetector)  //add it here below the .use(initReactI18next);
+
+  
+8. We can configure  the language detector by passing an object inside of this init() options.
+inside the init() below the 'fallbackLng:' add the 'detection' object and inside here pass 
+ "order: ['querystring', 'cookie', 'localStorage', 'sessionStorage', 'navigator', 'htmlTag', 'path', 'subdomain']"  - where the order which tells the utility which setting to prioritize, you could have multiple or you could prioritize the 'COOKIE' beacuse that's is the user setting, and if you can't find the language inside the cookie you actually revert to whatever comes next. // like: 
+  detection: {
+      order: ["htmlTag", "cookie", "localStorage", "path", "subdomain"], //we change the order for this project, added only those what we will use here.
+    }
+9. remove the 
+    lng: document.querySelector("html").lang, from the init() we don't use it any more, since using a Langauge Detector utility 
+
+    Now you can check the app it's working
+
+    -----------chaches--------
+10. inside the detection object we can say caches and pass different places where we want this language setting to be cached in for our user. We jsut gonna pass 'cookie'as a key here for now.
+    detection: {
+      order: ["htmlTag", "cookie", "localStorage", "path", "subdomain"],
+      caches: ["cookie"],
+    },
+Now, if you go the devtools -> Application -> Local Storage (http:localhost:300) you'll see Key/Value and then go to the 'Cookies'(http:localhost:300) you'll find the Name/Value properties, and when you change the '<html lang="ru">' that cookie changes to whatever you defined as value.
