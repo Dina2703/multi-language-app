@@ -52,6 +52,11 @@ function App() {
             <GlobeIcon />
           </button>
           <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+            <li>
+              <span className="dropdown-item-text">
+                {t("language")}
+              </span>
+            </li>
             {languages.map((language) => (
               <li key={language.country_code}>
                 <button
