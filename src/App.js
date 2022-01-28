@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import cookies from "js-cookie";
 import i18next from "i18next";
@@ -38,6 +39,11 @@ function App() {
   const releaseDate = new Date("2022-01-27");
   const timeDifference = new Date() - releaseDate;
   const number_of_days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+
+  useEffect(() => {
+    document.title = t("app_title");
+  }, [t]);
+
   return (
     <div className="container">
       <div className="d-flex justify-content-end">
@@ -53,9 +59,7 @@ function App() {
           </button>
           <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
             <li>
-              <span className="dropdown-item-text">
-                {t("language")}
-              </span>
+              <span className="dropdown-item-text">{t("language")}</span>
             </li>
             {languages.map((language) => (
               <li key={language.country_code}>
