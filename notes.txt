@@ -147,3 +147,5 @@ className={`fi fis fi-${language.country_code} mx-2`}
 ></span>
 8. Glove component. Used bootstrap icons for that.  Got to Bootstrap Icons find the icon you need,  copy HTML code, and pass it as return for Icon component, like we did with Glove Component in the App.js file, then us this component inside the view.
 
+9. npm install js-cookie - which is the package that allows us to manupulate cookies of our client. in this project we need to get 'currentLanguageCode' from it.
+

@@ -1,5 +1,7 @@
 import { useTranslation } from "react-i18next";
+import cookies from "js-cookie";
 import i18next from "i18next";
+
 const languages = [
   {
     code: "en",
@@ -31,6 +33,7 @@ const GlobeIcon = ({ width = 24, height = 24 }) => (
   </svg>
 );
 function App() {
+  const currentLanguageCode = cookies.get("i18next") || "en";
   const { t } = useTranslation();
   const releaseDate = new Date("2022-01-27");
   const timeDifference = new Date() - releaseDate;
@@ -54,6 +57,7 @@ function App() {
                 <button
                   className="dropdown-item"
                   onClick={() => i18next.changeLanguage(language.code)}
+                  disabled={language.code === currentLanguageCode}
                 >
                   <span
                     className={`fi fis fi-${language.country_code} mx-2`}
