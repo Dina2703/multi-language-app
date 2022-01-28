@@ -61,6 +61,9 @@ function App() {
                 >
                   <span
                     className={`fi fis fi-${language.country_code} mx-2`}
+                    style={{
+                      opacity: language.code === currentLanguageCode ? 0.5 : 1,
+                    }}
                   ></span>
                   {language.name}
                 </button>
