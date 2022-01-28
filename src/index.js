@@ -6,7 +6,7 @@ import LanguageDetector from "i18next-browser-languagedetector";
 import HttpApi from "i18next-http-backend";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.js";
-
+import 'flag-icons/css/flag-icons.min.css'
 import App from "./App";
 
 i18n
