@@ -137,3 +137,13 @@ import App from "./App";
 import { useTranslation} from "react-i18next"; to App. and remove it from the index.js , since we don't use it there.
 then, before the return create a const like:
 const { t } = useTranslation(); call it as a hook, and destructue t.
+
+7. For the country flags used  'flag-icons' package, 
+yarn add flag-icons  //run for installation
+add "import 'flag-icons/css/flag-icons.min.css'" at the top of index.js 
+use it like: 
+<span
+className={`fi fis fi-${language.country_code} mx-2`}
+></span>
+8. Glove component. Used bootstrap icons for that.  Got to Bootstrap Icons find the icon you need,  copy HTML code, and pass it as return for Icon component, like we did with Glove Component in the App.js file, then us this component inside the view.
+

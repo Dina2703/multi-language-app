@@ -1,4 +1,5 @@
 import { useTranslation } from "react-i18next";
+import i18next from "i18next";
 const languages = [
   {
     code: "en",
@@ -50,7 +51,10 @@ function App() {
           <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
             {languages.map((language) => (
               <li key={language.country_code}>
-                <button className="dropdown-item">
+                <button
+                  className="dropdown-item"
+                  onClick={() => i18next.changeLanguage(language.code)}
+                >
                   <span
                     className={`fi fis fi-${language.country_code} mx-2`}
                   ></span>
